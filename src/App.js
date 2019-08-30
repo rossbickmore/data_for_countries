@@ -25,6 +25,19 @@ const App = () => {
       />
   )
 
+  const languages = () => countries.map( country => 
+    country.languages.map( language =>
+    <li> {language.name} </li>
+  )
+  )
+  
+  const stats = () => countries.map( country =>
+    <div>
+      <h2>{country.name}</h2>
+      <p>capital {country.capital}</p>
+      <p>population {country.population}</p>
+    </div>
+  )
 
 
   const handleCountryChange = (event) => {
@@ -37,21 +50,51 @@ const App = () => {
     setCountries(countries.filter(filt))
   }
 
-
-  return (
-    <div>
-      <h1>Data for Countries!</h1>
+  if (countries.length > 10) {
+    return (
       <div>
-        find countries <input defaultValue={newCountry} onChange={handleCountryChange} />
-      </div>
-      <h2>Countries found</h2>
+        <h1>Data for Countries!</h1>
         <div>
+          find countries <input defaultValue={newCountry} onChange={handleCountryChange} />
+        </div>
+        <h2>Countries found</h2>
+        <p>too many matches, please be more specific</p>
+      </div>
+    )
+  } else if (countries.length > 1) {
+    return (
+      <div>
+        <h1>Data for Countries!</h1>
+        <div>
+          find countries <input defaultValue={newCountry} onChange={handleCountryChange} />
+        </div>
+        <h2>Countries found</h2>
+          <div>
+            <ul>
+              {rows()}
+            </ul>
+          </div>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h1>Data for Countries!</h1>
+        <div>
+          find countries <input defaultValue={newCountry} onChange={handleCountryChange} />
+        </div>
+        <div>
+          <div>
+            {stats()}
+          </div>
+          <h1>languages</h1>
           <ul>
-            {rows()}
+              {languages()}
           </ul>
         </div>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 export default App;
